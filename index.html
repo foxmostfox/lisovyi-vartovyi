@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Лісовий вартовий</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🌲 ЛІСОВИЙ ВАРТОВИЙ</h1>
+    <div class="subtitle">навчальна стратегія про лісові пожежі</div>
+  </header>
+
+  <main id="game-area">
+    <div id="left-col">
+      <!-- Ігрове поле і вікно магазину поверх нього -->
+      <div id="canvas-wrap">
+        <canvas id="game" width="960" height="640"></canvas>
+        <div id="shop"></div>
+      </div>
+      <!-- Кнопки куплених машин, вертольотів, бригад, веж -->
+      <div id="unit-bar"></div>
+    </div>
+
+    <!-- Бічна панель з інформацією -->
+    <aside id="panel">
+      <h2>СЕКТОР</h2>
+      <div id="sector-info">Наведи мишку на карту</div>
+
+      <h2>МЕТА</h2>
+      <div id="goal-info"></div>
+
+      <h2>ПОГОДА</h2>
+      <div id="weather-info"></div>
+
+      <h2>ВОГОНЬ</h2>
+      <div id="fire-info"></div>
+
+      <h2>КЕРУВАННЯ</h2>
+      <p class="hint">
+        Техніка: клікни по ній (або 1–9), потім клікни на карту<br>
+        Бригада: ПОТЯГНИ мишкою — смуга в будь-який бік<br>
+        Esc — зняти вибір<br>
+        Пожежник: WASD/стрілки, ПРОБІЛ — вода<br>
+        R — повернути вибрану техніку<br>
+        P — пауза, M — звук<br>
+        G — сектори, Backspace двічі — заново
+      </p>
+
+      <h2>ЛЕГЕНДА</h2>
+      <div id="legend"></div>
+    </aside>
+  </main>
+
+  <!-- Скрипти підключаємо звичайними тегами, по черзі.
+       Порядок важливий: спочатку спрайти, потім карта, ..., main.js — останній. -->
+  <script src="js/sound.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/fire.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/units.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/report.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

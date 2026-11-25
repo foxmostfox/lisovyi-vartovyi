@@ -1,0 +1,330 @@
+/* Загальний вигляд сторінки: темний фон, моноширинний "піксельний" шрифт */
+body {
+  margin: 0;
+  background: #14161c;
+  color: #f0e8d0;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+}
+
+header {
+  text-align: center;
+  padding: 8px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: 4px;
+  color: #ffb84a;
+  text-shadow: 3px 3px 0 #7a2a22;
+}
+
+/* Поле гри і панель стоять поруч */
+#game-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0 12px 12px;
+}
+
+/* Canvas розтягуємо, але пікселі лишаються чіткими (без розмиття) */
+#game {
+  display: block;
+  /* Вміщаємо карту і по ширині, і по висоті вікна (карта 3:2) */
+  width: min(calc(100vw - 320px), calc((100vh - 150px) * 1.5), 1440px);
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  border: 4px solid #3a3326;
+  background: #000;
+}
+
+/* Обгортка: магазин лежить поверх карти */
+#canvas-wrap {
+  position: relative;
+}
+
+/* ---------- Магазин ---------- */
+#shop {
+  display: none;
+  position: absolute;
+  inset: 4px;
+  overflow-y: auto;
+  background: rgba(20, 22, 28, 0.95);
+  padding: 12px 16px;
+  font-size: 14px;
+}
+#shop h2 {
+  margin: 0 0 8px;
+  color: #ffb84a;
+  font-size: 20px;
+}
+#shop h3 {
+  margin: 8px 0 4px;
+  color: #ffd84a;
+  font-size: 15px;
+}
+#shop ul {
+  margin: 4px 0;
+  padding-left: 18px;
+}
+#shop li {
+  margin: 3px 0;
+}
+.tips li {
+  color: #d8e8c0;
+}
+.shop-cols {
+  display: flex;
+  gap: 16px;
+}
+.shop-left, .shop-right {
+  flex: 1;
+}
+.shop-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #22252e;
+  border: 2px solid #3a3326;
+  padding: 4px 6px;
+  margin-bottom: 4px;
+}
+.shop-item canvas {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+.shop-text {
+  flex: 1;
+}
+.shop-text small {
+  color: #b8b0a0;
+  font-weight: normal;
+}
+.shop-count {
+  width: 22px;
+  text-align: center;
+  font-size: 18px;
+}
+#shop-money {
+  margin: 8px 0;
+}
+
+/* Кнопки в піксельному стилі */
+button {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 16px;
+  background: #3a3326;
+  color: #f0e8d0;
+  border: 2px solid #6b5a3a;
+  cursor: pointer;
+  padding: 2px 8px;
+}
+button:hover:not(:disabled) {
+  background: #5a4a30;
+}
+button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.big-btn {
+  background: #7a2a22;
+  border-color: #ffb84a;
+  color: #ffe066;
+  font-size: 18px;
+  padding: 8px 16px;
+}
+
+/* ---------- Нижня панель техніки ---------- */
+#unit-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  min-height: 46px;
+  max-width: min(calc(100vw - 320px), calc((100vh - 150px) * 1.5), 1440px);
+}
+.unit-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  text-align: left;
+  padding: 4px 8px;
+}
+.unit-btn small {
+  font-weight: normal;
+  color: #b8b0a0;
+}
+.unit-btn canvas {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+}
+.unit-btn.selected {
+  border-color: #ffd84a;
+  background: #5a4a30;
+}
+
+#panel {
+  width: 260px;
+  background: #22252e;
+  border: 4px solid #3a3326;
+  padding: 10px;
+  font-size: 15px;
+}
+
+#panel h2 {
+  margin: 4px 0 8px;
+  font-size: 18px;
+  color: #ffb84a;
+  border-bottom: 2px solid #3a3326;
+}
+
+#sector-info {
+  min-height: 110px;
+  line-height: 1.4;
+}
+
+/* Смужка індексу пожежної небезпеки */
+.danger-bar {
+  height: 8px;
+  background: #1a1a24;
+  margin: 4px 0 6px;
+}
+.danger-bar div {
+  height: 8px;
+}
+
+/* Легенда у дві колонки, щоб панель не була задовгою */
+#legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 12px;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0;
+}
+
+/* Маленькі зразки клітинок у легенді */
+.legend-row canvas {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+  border: 1px solid #000;
+}
+
+.hint {
+  color: #9a9082;
+  font-size: 13px;
+}
+
+/* ---------- Мета і результати ---------- */
+.goal {
+  background: #3a2a1a;
+  border-left: 4px solid #ffb84a;
+  padding: 6px 10px;
+  margin: 6px 0;
+}
+.stars {
+  font-size: 40px;
+  color: #ffd84a;
+  letter-spacing: 8px;
+}
+.report-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+.report-table th, .report-table td {
+  border-bottom: 1px solid #3a3326;
+  padding: 3px 4px;
+  text-align: left;
+}
+
+/* ---------- Розбір рішень і картки ---------- */
+.debrief {
+  list-style: none;
+  padding-left: 0 !important;
+}
+.debrief li {
+  display: flex;
+  gap: 6px;
+  background: #22252e;
+  border-left: 3px solid #3a3326;
+  padding: 4px 6px;
+  margin: 4px 0 !important;
+  font-weight: normal;
+}
+.debrief .ico {
+  flex-shrink: 0;
+  width: 22px;
+}
+.fact-card {
+  background: #1e3a2a;
+  border: 2px solid #5aa64a;
+  padding: 8px 10px;
+  margin: 8px 0;
+  font-weight: normal;
+}
+.fact-card b {
+  color: #8cc05a;
+}
+.fact-card p {
+  margin: 4px 0 6px;
+}
+.fact-card.sos {
+  background: #3a1e1e;
+  border-color: #e03a2a;
+}
+.fact-card.sos b {
+  color: #ffb84a;
+}
+.mini-map {
+  width: 100%;
+  max-width: 384px;
+  image-rendering: pixelated;
+  border: 2px solid #3a3326;
+}
+
+/* ---------- Головне меню ---------- */
+.subtitle {
+  color: #9a9082;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+.menu {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.menu-title {
+  font-size: 38px !important;
+  letter-spacing: 4px;
+  text-shadow: 3px 3px 0 #7a2a22;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+/* Назва гри «жевріє», як вугілля */
+@keyframes glow {
+  from { color: #ffb84a; }
+  to   { color: #ff7a1a; }
+}
+.menu .big-btn {
+  min-width: 320px;
+  font-size: 22px;
+}
+/* Темніший фон меню, щоб карта ледь проглядала */
+#shop:has(.menu) {
+  background: rgba(14, 16, 22, 0.82);
+}
